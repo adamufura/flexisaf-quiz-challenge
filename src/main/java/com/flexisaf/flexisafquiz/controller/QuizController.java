@@ -7,11 +7,13 @@ import com.flexisaf.flexisafquiz.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Tag(name = "Quizzes Controller", description = "Operations related to quizzes")
 @RestController
 @RequestMapping("/api/quizzes")
 public class QuizController {

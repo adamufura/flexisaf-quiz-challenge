@@ -7,10 +7,12 @@ import com.flexisaf.flexisafquiz.service.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 import java.util.UUID;
 
+@Tag(name = "Exams Controller", description = "Operations related to exams")
 @RestController
 @RequestMapping("/api/exams")
 public class ExamController {
