@@ -1,14 +1,13 @@
 package com.flexisaf.flexisafquiz.model;
 
 import jakarta.persistence.*;
-import java.util.UUID;
 
 @Entity
 public class Question {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Use auto-increment for Long IDs
+    private Long id;
 
     private String text;
 
@@ -27,11 +26,11 @@ public class Question {
 
     // Getters and Setters
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

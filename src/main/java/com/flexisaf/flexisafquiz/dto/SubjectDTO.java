@@ -1,18 +1,20 @@
 package com.flexisaf.flexisafquiz.dto;
 
-import java.util.UUID;
+import java.util.List;
 
 public class SubjectDTO {
-    private UUID id;
+
+    private String id;
     private String name;
+    private List<QuestionDTO> questions;
 
     // Getters and Setters
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -22,5 +24,13 @@ public class SubjectDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<QuestionDTO> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuestionDTO> questions) {
+        this.questions = questions;
     }
 }

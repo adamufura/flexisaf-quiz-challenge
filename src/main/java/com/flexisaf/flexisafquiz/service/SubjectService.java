@@ -1,6 +1,8 @@
 package com.flexisaf.flexisafquiz.service;
 
+import com.flexisaf.flexisafquiz.dto.QuestionDTO;
 import com.flexisaf.flexisafquiz.dto.SubjectDTO;
+import com.flexisaf.flexisafquiz.model.Question;
 import com.flexisaf.flexisafquiz.model.Subject;
 import com.flexisaf.flexisafquiz.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +33,38 @@ public class SubjectService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<SubjectDTO> getSubject(UUID subjectId) {
+    public Optional<SubjectDTO> getSubject(String subjectId) {
         return subjectRepository.findById(subjectId)
-                .map(this::mapToDto);
+                .map(this::mapToDtoWithQuestions);
+    }
+
+    public void deleteSubject(String subjectId) {
+        subjectRepository.deleteById(subjectId);
     }
 
     private SubjectDTO mapToDto(Subject subject) {
         SubjectDTO dto = new SubjectDTO();
         dto.setId(subject.getId());
         dto.setName(subject.getName());
+        return dto;
+    }
+
+    private SubjectDTO mapToDtoWithQuestions(Subject subject) {
+        SubjectDTO dto = new SubjectDTO();
+        dto.setId(subject.getId());
+        dto.setName(subject.getName());
+        List<QuestionDTO> questions = subject.getQuestions().stream()
+                .map(this::mapToQuestionDto)
+                .collect(Collectors.toList());
+        dto.setQuestions(questions);
+        return dto;
+    }
+
+    private QuestionDTO mapToQuestionDto(Question question) {
+        QuestionDTO dto = new QuestionDTO();
+        dto.setId(question.getId());
+        dto.setText(question.getText());
+        dto.setDifficulty(question.getDifficulty());
         return dto;
     }
 }

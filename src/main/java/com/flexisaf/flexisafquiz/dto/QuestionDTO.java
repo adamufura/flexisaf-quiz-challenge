@@ -1,12 +1,9 @@
-// QuestionDTO.java
 package com.flexisaf.flexisafquiz.dto;
 
 import com.flexisaf.flexisafquiz.model.DifficultyType;
 
-import java.util.UUID;
-
 public class QuestionDTO {
-    private UUID id;
+    private Long id;
     private String text;
     private DifficultyType difficulty;
     private String optionA;
@@ -14,15 +11,15 @@ public class QuestionDTO {
     private String optionC;
     private String optionD;
     private String correctOption;
-    private UUID subjectId;
+    private String subjectId;
 
     // Getters and Setters
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -82,11 +79,11 @@ public class QuestionDTO {
         this.optionD = optionD;
     }
 
-    public UUID getSubjectId() {
+    public String getSubjectId() {
         return subjectId;
     }
 
-    public void setSubjectId(UUID subjectId) {
+    public void setSubjectId(String subjectId) {
         this.subjectId = subjectId;
     }
 }

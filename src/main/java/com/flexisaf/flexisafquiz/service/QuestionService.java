@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +22,7 @@ public class QuestionService {
     @Autowired
     private SubjectRepository subjectRepository;
 
-    public QuestionDTO createQuestion(UUID subjectId, String text, DifficultyType difficulty, String optionA, String optionB, String optionC, String optionD, String correctOption) {
+    public QuestionDTO createQuestion(String subjectId, String text, DifficultyType difficulty, String optionA, String optionB, String optionC, String optionD, String correctOption) {
         Optional<Subject> subjectOpt = subjectRepository.findById(subjectId);
         if (!subjectOpt.isPresent()) {
             throw new IllegalArgumentException("Subject not found");
@@ -43,14 +42,14 @@ public class QuestionService {
         return mapToDTO(savedQuestion);
     }
 
-    public List<QuestionDTO> getQuestionsForSubject(UUID subjectId, DifficultyType difficulty) {
+    public List<QuestionDTO> getQuestionsForSubject(String subjectId, DifficultyType difficulty) {
         return questionRepository.findBySubjectIdAndDifficulty(subjectId, difficulty)
                 .stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
-    public Optional<QuestionDTO> updateQuestion(UUID questionId, String text, DifficultyType difficulty, String optionA, String optionB, String optionC, String optionD, String correctOption) {
+    public Optional<QuestionDTO> updateQuestion(Long questionId, String text, DifficultyType difficulty, String optionA, String optionB, String optionC, String optionD, String correctOption) {
         Optional<Question> questionOpt = questionRepository.findById(questionId);
         if (!questionOpt.isPresent()) {
             return Optional.empty();
@@ -69,7 +68,7 @@ public class QuestionService {
         return Optional.of(mapToDTO(updatedQuestion));
     }
 
-    public boolean deleteQuestion(UUID questionId) {
+    public boolean deleteQuestion(Long questionId) {
         if (!questionRepository.existsById(questionId)) {
             return false;
         }

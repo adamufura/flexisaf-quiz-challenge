@@ -1,35 +1,21 @@
 package com.flexisaf.flexisafquiz.dto;
 
 import com.flexisaf.flexisafquiz.model.DifficultyType;
-import com.flexisaf.flexisafquiz.model.Subject;
-
 import java.util.List;
-import java.util.UUID;
 
 public class QuizDTO {
-    private UUID id;
+    private String id;
     private String name;
     private DifficultyType type;
-    private List<Subject> subjects;
-    private List<UUID> subjectIds;
+    private List<String> subjectIds;
 
     // Constructors, Getters, and Setters
 
-    public QuizDTO() {
-    }
-
-    public QuizDTO(UUID id, String name, DifficultyType type, List<Subject> subjects) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.subjects = subjects;
-    }
-
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -49,20 +35,11 @@ public class QuizDTO {
         this.type = type;
     }
 
-    public List<Subject> getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(List<Subject> subjects) {
-        this.subjects = subjects;
-    }
-
-    public List<UUID> getSubjectIds() {
+    public List<String> getSubjectIds() {
         return subjectIds;
     }
 
-    public void setSubjectIds(List<UUID> subjectIds) {
+    public void setSubjectIds(List<String> subjectIds) {
         this.subjectIds = subjectIds;
     }
-
 }

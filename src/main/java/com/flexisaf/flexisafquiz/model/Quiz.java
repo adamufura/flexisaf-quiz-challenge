@@ -1,15 +1,19 @@
 package com.flexisaf.flexisafquiz.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Quiz {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(generator = "quiz-id-gen")
+    @GenericGenerator(name = "quiz-id-gen", strategy = "com.flexisaf.flexisafquiz.util.CustomIdGenerator",
+            parameters = @Parameter(name = "prefix", value = "QUIZ-"))
+    private String id;
 
     private String name;
 
@@ -21,11 +25,11 @@ public class Quiz {
 
     // Getters and Setters
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

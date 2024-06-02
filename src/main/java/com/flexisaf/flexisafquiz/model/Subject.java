@@ -1,15 +1,19 @@
 package com.flexisaf.flexisafquiz.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Subject {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(generator = "subject-id-gen")
+    @GenericGenerator(name = "subject-id-gen", strategy = "com.flexisaf.flexisafquiz.util.CustomIdGenerator",
+            parameters = @Parameter(name = "prefix", value = "SUB-"))
+    private String id;
 
     private String name;
 
@@ -18,11 +22,11 @@ public class Subject {
 
     // Getters and Setters
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

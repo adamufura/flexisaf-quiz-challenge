@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,30 +22,34 @@ public class QuizService {
     @Autowired
     private SubjectRepository subjectRepository;
 
-    public Quiz createQuiz(String name, DifficultyType type, List<UUID> subjectIds) {
-        List<Subject> subjects = subjectRepository.findAllById(subjectIds);
+    public QuizDTO createQuiz(QuizDTO quizDTO) {
         Quiz quiz = new Quiz();
-        quiz.setName(name);
-        quiz.setType(type);
+        quiz.setName(quizDTO.getName());
+        quiz.setType(quizDTO.getType());
+
+        List<Subject> subjects = subjectRepository.findAllById(quizDTO.getSubjectIds());
         quiz.setSubjects(subjects);
-        return quizRepository.save(quiz);
+
+        Quiz createdQuiz = quizRepository.save(quiz);
+        return mapToDTO(createdQuiz);
     }
 
-    public Optional<Quiz> getQuiz(UUID quizId) {
-        return quizRepository.findById(quizId);
+    public Optional<QuizDTO> getQuiz(String quizId) {
+        Optional<Quiz> quizOptional = quizRepository.findById(quizId);
+        return quizOptional.map(this::mapToDTO);
     }
 
-    public List<Quiz> getAllQuizzes() {
-        return quizRepository.findAll();
+    public List<QuizDTO> getAllQuizzes() {
+        List<Quiz> quizzes = quizRepository.findAll();
+        return quizzes.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
-    public boolean deleteQuiz(UUID quizId) {
-        if (!quizRepository.existsById(quizId)) {
-            return false;
+    public boolean deleteQuiz(String quizId) {
+        if (quizRepository.existsById(quizId)) {
+            quizRepository.deleteById(quizId);
+            return true;
         }
-
-        quizRepository.deleteById(quizId);
-        return true;
+        return false;
     }
 
     public QuizDTO mapToDTO(Quiz quiz) {
@@ -56,11 +59,5 @@ public class QuizService {
         quizDTO.setType(quiz.getType());
         quizDTO.setSubjectIds(quiz.getSubjects().stream().map(Subject::getId).collect(Collectors.toList()));
         return quizDTO;
-    }
-
-    public List<QuizDTO> mapToDTOList(List<Quiz> quizzes) {
-        return quizzes.stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
     }
 }
