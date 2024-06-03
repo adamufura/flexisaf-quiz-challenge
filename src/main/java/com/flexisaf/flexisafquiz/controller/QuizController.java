@@ -45,12 +45,12 @@ public class QuizController {
 
     @Operation(summary = "Delete a quiz", description = "This endpoint deletes a quiz.")
     @DeleteMapping("/{quizId}")
-    public ResponseEntity<Void> deleteQuiz(
+    public ResponseEntity<String> deleteQuiz(
             @Parameter(description = "The ID of the quiz") @PathVariable String quizId) {
         if (quizService.deleteQuiz(quizId)) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("Quiz is deleted");
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok("Something went wrong");
         }
     }
 }

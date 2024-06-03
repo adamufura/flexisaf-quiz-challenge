@@ -8,9 +8,10 @@ public class QuizDTO {
     private String name;
     private DifficultyType type;
     private List<String> subjectIds;
+    private List<QuizSubjectDTO> subjects; // Change here
+    private List<QuizQuestionDTO> questions;
 
     // Constructors, Getters, and Setters
-
     public String getId() {
         return id;
     }
@@ -41,5 +42,21 @@ public class QuizDTO {
 
     public void setSubjectIds(List<String> subjectIds) {
         this.subjectIds = subjectIds;
+    }
+
+    public List<QuizSubjectDTO> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<QuizSubjectDTO> subjects) {
+        this.subjects = subjects;
+    }
+
+    public List<QuizQuestionDTO> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<QuizQuestionDTO> questions) {
+        this.questions = questions;
     }
 }
