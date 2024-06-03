@@ -37,6 +37,16 @@ public class QuestionController {
         return ResponseEntity.ok(question);
     }
 
+
+    @Operation(summary = "Get all questions",
+            description = "This endpoint retrieves all questions.")
+    @GetMapping
+    public ResponseEntity<List<QuestionDTO>> getAllQuestions() {
+        List<QuestionDTO> allQuestions = questionService.getAllQuestions();
+        return ResponseEntity.ok(allQuestions);
+    }
+
+
     @Operation(summary = "Get questions for a subject by difficulty",
             description = "This endpoint retrieves questions for a subject by the specified difficulty.")
     @GetMapping("/{subjectId}/{difficulty}")
@@ -68,10 +78,10 @@ public class QuestionController {
     @Operation(summary = "Delete a question",
             description = "This endpoint deletes a question.")
     @DeleteMapping("/{questionId}")
-    public ResponseEntity<Void> deleteQuestion(
+    public ResponseEntity<String> deleteQuestion(
             @Parameter(description = "The ID of the question") @PathVariable Long questionId) {
         if (questionService.deleteQuestion(questionId)) {
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("Question is deleted");
         } else {
             return ResponseEntity.notFound().build();
         }

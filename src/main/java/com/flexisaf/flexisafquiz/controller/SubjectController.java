@@ -46,8 +46,8 @@ public class SubjectController {
     @Operation(summary = "Delete a subject",
             description = "This endpoint deletes a subject by its ID.")
     @DeleteMapping("/{subjectId}")
-    public ResponseEntity<Void> deleteSubject(@PathVariable String subjectId) {
+    public ResponseEntity<String> deleteSubject(@PathVariable String subjectId) {
         subjectService.deleteSubject(subjectId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok("Subject is deleted");
     }
 }

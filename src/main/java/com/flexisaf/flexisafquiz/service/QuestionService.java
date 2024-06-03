@@ -42,6 +42,12 @@ public class QuestionService {
         return mapToDTO(savedQuestion);
     }
 
+    public List<QuestionDTO> getAllQuestions() {
+        return questionRepository.findAll().stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
     public List<QuestionDTO> getQuestionsForSubject(String subjectId, DifficultyType difficulty) {
         return questionRepository.findBySubjectIdAndDifficulty(subjectId, difficulty)
                 .stream()

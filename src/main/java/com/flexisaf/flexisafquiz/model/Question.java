@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Question {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Use auto-increment for Long IDs
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrementing integer ID
     private Long id;
 
     private String text;
