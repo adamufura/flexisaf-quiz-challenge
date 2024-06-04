@@ -21,6 +21,13 @@ public class Subject {
     private List<Question> questions;
 
     // Getters and Setters
+    public Subject() {
+    }
+
+    public Subject(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public String getId() {
         return id;

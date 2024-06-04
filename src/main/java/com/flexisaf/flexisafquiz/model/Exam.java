@@ -6,6 +6,7 @@ import java.util.UUID;
 import java.util.ArrayList;
 
 @Entity
+//@Table("")
 public class Exam {
 
     @Id
