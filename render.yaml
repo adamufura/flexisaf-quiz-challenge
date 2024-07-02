@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: springboot-app
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DATABASE_HOST
+        fromDatabase:
+          name: flexisafquiz-db
+          property: host
+      - key: DATABASE_PORT
+        fromDatabase:
+          name: flexisafquiz-db
+          property: port
+      - key: DATABASE_NAME
+        fromDatabase:
+          name: flexisafquiz-db
+          property: database
+      - key: DATABASE_USER
+        fromDatabase:
+          name: flexisafquiz-db
+          property: user
+      - key: DATABASE_PASSWORD
+        fromDatabase:
+          name: flexisafquiz-db
+          property: password
+    plan: free
+
+  - type: postgresql
+    name: flexisafquiz-db
+    plan: free
+    properties:
+      databaseName: flexisafquiz
+      user: postgres
+      password: 2326
