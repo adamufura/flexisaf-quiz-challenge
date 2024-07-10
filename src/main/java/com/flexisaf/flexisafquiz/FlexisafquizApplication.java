@@ -11,9 +11,9 @@ public class FlexisafquizApplication {
 
     public static void main(String[] args) {
 		SpringApplication.run(FlexisafquizApplication.class, args);
-        logger.debug("Debug log message");
-        logger.info("Info log message");
-        logger.error("Error log message");
+//        logger.debug("Debug log message");
+//        logger.info("Info log message");
+//        logger.error("Error log message");
 	}
 
 }

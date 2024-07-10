@@ -22,6 +22,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+<!--FLYWAY-->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
 
 		<!-- PostgreSQL Driver -->
 		<dependency>
@@ -113,6 +122,18 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- Flyway Maven Plugin -->
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>10.10.0</version> <!-- Adjust version as needed -->
+				<configuration>
+					<url>jdbc:postgresql://localhost:4000/quiz</url>
+					<user>postgres</user>
+					<password>2326</password>
+					<driver>org.postgresql.Driver</driver>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
