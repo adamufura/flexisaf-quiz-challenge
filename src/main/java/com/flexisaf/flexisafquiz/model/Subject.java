@@ -1,55 +1,24 @@
 package com.flexisaf.flexisafquiz.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 @Entity
 public class Subject {
 
     @Id
-    @GeneratedValue(generator = "subject-id-gen")
-    @GenericGenerator(name = "subject-id-gen", strategy = "com.flexisaf.flexisafquiz.util.CustomIdGenerator",
-            parameters = @Parameter(name = "prefix", value = "SUB-"))
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @NotBlank(message = "Subject name cannot be blank")
+    @Size(max = 30, message = "Subject cannot exceed 30 characters")
     private String name;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Question> questions;
-
-    // Getters and Setters
-    public Subject() {
-    }
-
-    public Subject(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
 }

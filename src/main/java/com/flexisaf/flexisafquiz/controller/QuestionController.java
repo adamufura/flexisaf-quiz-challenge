@@ -1,89 +1,54 @@
 package com.flexisaf.flexisafquiz.controller;
 
-import com.flexisaf.flexisafquiz.dto.QuestionDTO;
-import com.flexisaf.flexisafquiz.model.DifficultyType;
-import com.flexisaf.flexisafquiz.service.QuestionService;
+import com.flexisaf.flexisafquiz.dto.Response;
+import com.flexisaf.flexisafquiz.model.Question;
+import com.flexisaf.flexisafquiz.service.interfaces.IQuestionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
-
-import java.util.List;
 
 @Tag(name = "Questions Controller", description = "Operations related to questions")
 @RestController
 @RequestMapping("/api/questions")
+@Validated
 public class QuestionController {
 
     @Autowired
-    private QuestionService questionService;
+    private IQuestionService questionService;
 
     @Operation(summary = "Create a new question",
-            description = "This endpoint creates a new question.")
+            description = "This endpoint creates a new question in the system.")
     @PostMapping
-    public ResponseEntity<QuestionDTO> createQuestion(@RequestBody QuestionDTO questionDTO) {
-        QuestionDTO question = questionService.createQuestion(
-                questionDTO.getSubjectId(),
-                questionDTO.getText(),
-                questionDTO.getDifficulty(),
-                questionDTO.getOptionA(),
-                questionDTO.getOptionB(),
-                questionDTO.getOptionC(),
-                questionDTO.getOptionD(),
-                questionDTO.getCorrectOption()
-        );
-        return ResponseEntity.ok(question);
+    public ResponseEntity<Response> createQuestion(@Valid @RequestBody Question question) {
+        Response response = questionService.saveQuestion(question);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
-
 
     @Operation(summary = "Get all questions",
             description = "This endpoint retrieves all questions.")
     @GetMapping
-    public ResponseEntity<List<QuestionDTO>> getAllQuestions() {
-        List<QuestionDTO> allQuestions = questionService.getAllQuestions();
-        return ResponseEntity.ok(allQuestions);
+    public ResponseEntity<Response> getAllQuestions() {
+        Response response = questionService.findAllQuestions();
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-
-    @Operation(summary = "Get questions for a subject by difficulty",
-            description = "This endpoint retrieves questions for a subject by the specified difficulty.")
-    @GetMapping("/{subjectId}/{difficulty}")
-    public ResponseEntity<List<QuestionDTO>> getQuestionsForSubject(
-            @Parameter(description = "The ID of the subject") @PathVariable String subjectId,
-            @Parameter(description = "The difficulty level of the questions") @PathVariable DifficultyType difficulty) {
-        return ResponseEntity.ok(questionService.getQuestionsForSubject(subjectId, difficulty));
-    }
-
-    @Operation(summary = "Update a question",
-            description = "This endpoint updates an existing question.")
-    @PutMapping("/{questionId}")
-    public ResponseEntity<QuestionDTO> updateQuestion(
-            @Parameter(description = "The ID of the question") @PathVariable Long questionId,
-            @RequestBody QuestionDTO questionDTO) {
-        return questionService.updateQuestion(
-                        questionId,
-                        questionDTO.getText(),
-                        questionDTO.getDifficulty(),
-                        questionDTO.getOptionA(),
-                        questionDTO.getOptionB(),
-                        questionDTO.getOptionC(),
-                        questionDTO.getOptionD(),
-                        questionDTO.getCorrectOption()
-                ).map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @Operation(summary = "Get a question by ID",
+            description = "This endpoint retrieves a question by its ID.")
+    @GetMapping("/{questionId}")
+    public ResponseEntity<Response> getQuestion(@Valid @PathVariable Long questionId) {
+        Response response = questionService.findQuestionById(questionId);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @Operation(summary = "Delete a question",
-            description = "This endpoint deletes a question.")
+            description = "This endpoint deletes a question by its ID.")
     @DeleteMapping("/{questionId}")
-    public ResponseEntity<String> deleteQuestion(
-            @Parameter(description = "The ID of the question") @PathVariable Long questionId) {
-        if (questionService.deleteQuestion(questionId)) {
-            return ResponseEntity.ok("Question is deleted");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Response> deleteQuestion(@Valid @PathVariable Long questionId) {
+        Response response = questionService.deleteQuestion(questionId);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }

@@ -1,100 +1,49 @@
 package com.flexisaf.flexisafquiz.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 
+@Data
 @Entity
 public class Question {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrementing integer ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Question text cannot be blank")
+    @Size(max = 255, message = "Question text cannot exceed 255 characters")
     private String text;
 
+    @NotNull(message = "Difficulty level is required")
     @Enumerated(EnumType.STRING)
     private DifficultyType difficulty;
 
+    @NotBlank(message = "Option A cannot be blank")
+    @Size(max = 100, message = "Option A cannot exceed 100 characters")
     private String optionA;
+
+    @NotBlank(message = "Option B cannot be blank")
+    @Size(max = 100, message = "Option B cannot exceed 100 characters")
     private String optionB;
+
+    @NotBlank(message = "Option C cannot be blank")
+    @Size(max = 100, message = "Option C cannot exceed 100 characters")
     private String optionC;
+
+    @NotBlank(message = "Option D cannot be blank")
+    @Size(max = 100, message = "Option D cannot exceed 100 characters")
     private String optionD;
+
+    @NotBlank(message = "Correct option cannot be blank")
+    @Size(max = 1, message = "Correct option must be a single character (e.g., A, B, C, or D)")
     private String correctOption;
 
     @ManyToOne
     @JoinColumn(name = "subject_id")
+    @NotNull(message = "Subject is required")
     private Subject subject;
-
-    // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public DifficultyType getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(DifficultyType difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public String getOptionA() {
-        return optionA;
-    }
-
-    public void setOptionA(String optionA) {
-        this.optionA = optionA;
-    }
-
-    public String getOptionB() {
-        return optionB;
-    }
-
-    public void setOptionB(String optionB) {
-        this.optionB = optionB;
-    }
-
-    public String getOptionC() {
-        return optionC;
-    }
-
-    public void setOptionC(String optionC) {
-        this.optionC = optionC;
-    }
-
-    public String getOptionD() {
-        return optionD;
-    }
-
-    public void setOptionD(String optionD) {
-        this.optionD = optionD;
-    }
-
-    public String getCorrectOption() {
-        return correctOption;
-    }
-
-    public void setCorrectOption(String correctOption) {
-        this.correctOption = correctOption;
-    }
-
-    public Subject getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Subject subject) {
-        this.subject = subject;
-    }
 }

@@ -2,7 +2,7 @@ package com.flexisaf.flexisafquiz.config;
 
 import com.flexisaf.flexisafquiz.security.JwtAuthenticationFilter;
 import com.flexisaf.flexisafquiz.security.JwtTokenProvider;
-import com.flexisaf.flexisafquiz.service.UserDetailsServiceImpl;
+import com.flexisaf.flexisafquiz.service.impl.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.flexisaf.flexisafquiz.security.CustomAuthenticationEntryPoint;

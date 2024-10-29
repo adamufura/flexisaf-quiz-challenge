@@ -1,7 +1,6 @@
 package com.flexisaf.flexisafquiz.security;
 
-import com.flexisaf.flexisafquiz.service.UserPrincipal;
-import com.flexisaf.flexisafquiz.security.TokenBlacklist;
+import com.flexisaf.flexisafquiz.service.impl.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -19,10 +18,10 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${app.jwtSecret}")
+    @Value("${jwtSecret}")
     private String jwtSecret;
 
-    @Value("${app.jwtExpirationInMs}")
+    @Value("${jwtExpirationInMs}")
     private long jwtExpirationInMs;
 
     private Key jwtKey;

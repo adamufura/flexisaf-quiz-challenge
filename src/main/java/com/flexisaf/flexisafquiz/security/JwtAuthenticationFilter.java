@@ -1,6 +1,6 @@
 package com.flexisaf.flexisafquiz.security;
 
-import com.flexisaf.flexisafquiz.service.UserDetailsServiceImpl;
+import com.flexisaf.flexisafquiz.service.impl.UserDetailsServiceImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;

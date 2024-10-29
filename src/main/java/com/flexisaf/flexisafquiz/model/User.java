@@ -1,8 +1,14 @@
 package com.flexisaf.flexisafquiz.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
 import java.util.UUID;
 
+@Data
 @Entity
 @Table(name = "users")
 public class User {
@@ -11,72 +17,25 @@ public class User {
     @GeneratedValue
     private UUID id;
 
+    @NotBlank(message = "Firstname cannot be blank")
+    @Size(max = 20, message = "Firstname cannot be greater than 20 characters")
     private String firstname;
+
+    @NotBlank(message = "Lastname cannot be blank")
+    @Size(max = 20, message = "Lastname cannot be greater than 20 characters")
     private String lastname;
+
+    @Email(message = "Email should be valid")
+    @NotBlank(message = "Email cannot be blank")
     private String email;
+
+    @Size(min = 10, max = 15, message = "Phonenumber must be between 10 to 15 characters")
     private String phonenumber;
+
+    @NotBlank(message = "Password cannot be blank")
+    @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-
-    // Getters and Setters
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhonenumber() {
-        return phonenumber;
-    }
-
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
 }

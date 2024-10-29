@@ -8,6 +8,5 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface ExamRepository extends JpaRepository<Exam, UUID> {
-    List<Exam> findAllByStudentId(UUID studentId);
+public interface ExamRepository extends JpaRepository<Exam, Long> {
 }
